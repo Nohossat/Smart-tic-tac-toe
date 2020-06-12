@@ -4,8 +4,9 @@ from exceptions import ValueTooSmallError, ValueTooBigError, ValueNotAvailable
 class Player:
     def __init__(self, token):
         self.token = token
+        self.args = {} # args for the choose_square method
 
-    def choose_square(self, available_squares):
+    def choose_square(self, kwargs):
         """
         allow human being to fill a square, input validation also included
         """
@@ -19,7 +20,7 @@ class Player:
                     raise ValueTooBigError
                 elif choice < 0:
                     raise ValueTooSmallError
-                elif choice not in available_squares: 
+                elif choice not in kwargs["available_squares"]: 
                     raise ValueNotAvailable
                 else :
                     break

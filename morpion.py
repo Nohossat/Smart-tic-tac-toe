@@ -14,10 +14,18 @@ class Morpion:
         self.board = list(range(1,10))
         self.available_squares = list(range(1,10))
 
+        # set players
+        player1 = Player("O")
+        player1.args = { "available_squares" : self.available_squares }
+
         if not human:
-            self.players = [Player("0"), Computer("X")]
+            player2 = Computer("X")
+            player2.args = { "board" : self.board, "opponent_token" : player1.token }
         else :
-            self.players = [Player("0"), Player("X")]
+            player2 = Player("X")
+            player2.args = { "available_squares" : self.available_squares }
+        
+        self.players = [player1, player2]
 
         self.winning_combi = [
             [0, 1, 2],
@@ -41,7 +49,7 @@ class Morpion:
         """
 
         self.print_board()
-        choice = self.current_player.choose_square(self.available_squares)
+        choice = self.current_player.choose_square(self.current_player.args)
         self.print_choice(choice)
 
     def print_board(self):

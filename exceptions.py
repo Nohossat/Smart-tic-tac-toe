@@ -6,3 +6,6 @@ class ValueTooBigError(Exception):
 
 class ValueNotAvailable(Exception):
     pass
+
+class MissingArgument(Exception):
+    pass
