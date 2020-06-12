@@ -39,9 +39,9 @@ class Morpion:
         if self.mode: # when True, play verses human
             self.get_human_choice()
         else :
-            if self.current_player == "0":
+            if self.current_player == "0": # computer : player 0
                 self.get_computer_choice()
-            else :
+            else : # human ; player X
                 self.get_human_choice()
 
     def print_board(self):
@@ -66,18 +66,17 @@ class Morpion:
 
         while True:
             try:
-                choice = int(input("Dans quelle case, tu veux placer ton pion (entre 1 et 9): "))
+                choice = int(input("Dans quelle case, veux-tu placer ton pion (entre 1 et 9): "))
 
                 if choice > 9 :
                     raise ValueTooBigError
                 elif choice < 0:
                     raise ValueTooSmallError
-
-                if choice in self.available_squares: 
+                elif choice not in self.available_squares: 
+                    raise ValueNotAvailable
+                else :
                     self.print_choice(choice)
                     break
-                else : 
-                    print("Case non disponible : il faut en choisir une autre")
 
             except ValueError as e:
                 print("Votre choix doit être une valeur numérique, comprise entre 1 et 9")
@@ -85,6 +84,8 @@ class Morpion:
                 print("Votre choix doit être un chiffre supérieur à 0")
             except ValueTooBigError as e:
                 print("Votre choix doit être un chiffre inférieur à 9")
+            except ValueNotAvailable as e:
+                print("Case non disponible : il faut en choisir une autre")
 
     def get_computer_choice(self):
         """
@@ -98,10 +99,10 @@ class Morpion:
         """
         print current player choice in the designated square
         """
-        self.available_squares.remove(square)
+        self.available_squares.remove(square) 
 
         square = square - 1 # we have to remove 1 for indexation purpose
-        self.board[square] = self.current_player
+        self.board[square] = self.current_player # place pawn
         self.check_winner()
 
     def check_winning_combinations(self):
@@ -129,12 +130,14 @@ class Morpion:
                 print("=================")
                 print('')
                 print(f"{self.current_player} a gagné")
+                print('')
                 print("End of the game")
             else :
                 if "*" not in self.board:
                     # game finished because all squares are filled
                     self.print_board()
                     print("il n'y a pas de gagant")
+                    print('')
                     print("End of the game")
                 else :
                     # no winning combination, so continue

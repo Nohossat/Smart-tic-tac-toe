@@ -3,3 +3,6 @@ class ValueTooSmallError(Exception):
 
 class ValueTooBigError(Exception):
     pass
+
+class ValueNotAvailable(Exception):
+    pass
