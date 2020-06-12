@@ -1,5 +1,6 @@
+from player import Player
+from computer import Computer
 import random
-from exceptions import ValueTooSmallError, ValueTooBigError, ValueNotAvailable
 
 class Morpion:
     def __init__(self, human=True):
@@ -12,16 +13,21 @@ class Morpion:
         # initialize attributs
         self.board = list(range(1,10))
         self.available_squares = list(range(1,10))
-        self.players = ["0", "X"]
+
+        if not human:
+            self.players = [Player("0"), Computer("X")]
+        else :
+            self.players = [Player("0"), Player("X")]
+
         self.winning_combi = [
             [0, 1, 2],
-            [3, 4, 5],
-            [6, 7, 8],
+            [0, 4, 8],
             [0, 3, 6],
             [1, 4, 7],
             [2, 5, 8],
-            [0, 4, 8],
             [2, 4, 6],
+            [3, 4, 5],
+            [6, 7, 8]
         ] # il y a 8 combinaisaons gagnates - on récupère leurs index
         self.current_player = self.players[random.randint(0,1)]
         self.mode = human
@@ -35,14 +41,8 @@ class Morpion:
         """
 
         self.print_board()
-
-        if self.mode: # when True, play verses human
-            self.get_human_choice()
-        else :
-            if self.current_player == "0": # computer : player 0
-                self.get_computer_choice()
-            else : # human ; player X
-                self.get_human_choice()
+        choice = self.current_player.choose_square(self.available_squares)
+        self.print_choice(choice)
 
     def print_board(self):
         """
@@ -57,59 +57,23 @@ class Morpion:
                 print(i, end =" ")
         print('-----------------')
 
-    def get_human_choice(self):
-        """
-        allow human being to fill a square, input validation also included
-        """
-        print(f"Joueur {self.current_player}, à toi de jouer : ")
-
-        while True:
-            try:
-                choice = int(input("Dans quelle case, veux-tu placer ton pion (entre 1 et 9): "))
-
-                if choice > 9 :
-                    raise ValueTooBigError
-                elif choice < 0:
-                    raise ValueTooSmallError
-                elif choice not in self.available_squares: 
-                    raise ValueNotAvailable
-                else :
-                    self.print_choice(choice)
-                    break
-
-            except ValueError as e:
-                print("Votre choix doit être une valeur numérique, comprise entre 1 et 9")
-            except ValueTooSmallError as e:
-                print("Votre choix doit être un chiffre supérieur à 0")
-            except ValueTooBigError as e:
-                print("Votre choix doit être un chiffre inférieur à 9")
-            except ValueNotAvailable as e:
-                print("Case non disponible : il faut en choisir une autre")
-
-    def get_computer_choice(self):
-        """
-        random choice among available squares by computer
-        """
-        print(f"Joueur {self.current_player} (Computer)")
-        choice = random.choice(self.available_squares)
-        self.print_choice(choice)
-
     def print_choice(self, square):
         """
         print current player choice in the designated square
         """
         self.available_squares.remove(square) 
 
-        square = square - 1 # we have to remove 1 for indexation purpose
-        self.board[square] = self.current_player # place pawn
+        square = square - 1 # we have to remove 1 for indexation purposes
+        self.board[square] = self.current_player.token # place pawn
         self.check_winner()
 
     def check_winning_combinations(self):
         """
         check among the winning combinations if the current player has one of them
         """
+        
         for square1, square2, square3 in self.winning_combi:
-            if self.current_player == self.board[square1] == self.board[square2] == self.board[square3]:
+            if self.current_player.token == self.board[square1] == self.board[square2] == self.board[square3]:
                 return True
         return False
 
@@ -122,15 +86,14 @@ class Morpion:
         """
         check if there is a winner, otherwise resume the game
         """
-        
-        if self.board.count(self.current_player) >= 3:
+
+        if self.board.count(self.current_player.token) >= 3:
             if self.check_winning_combinations() :
                 self.print_board()
                 print("=================\n")
-                print(f"{self.current_player} a gagné\n")
+                print(f"{self.current_player.token} a gagné\n")
                 print("End of the game")
             else :
-
                 if not self.available_squares:
                     # game finished because all squares are filled
                     self.print_board()
