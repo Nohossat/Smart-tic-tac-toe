@@ -1,5 +1,5 @@
 import random
-from exceptions import ValueTooSmallError, ValueTooBigError
+from exceptions import ValueTooSmallError, ValueTooBigError, ValueNotAvailable
 
 class Morpion:
     def __init__(self, human=True):
