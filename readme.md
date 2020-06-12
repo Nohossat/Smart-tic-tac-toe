@@ -1,19 +1,15 @@
 # Tic-Tac-Toe
 
-2 modes available:
-
-### Human versus Human
-
-In the app.py file, change the human parameter to **True**.
-
-```python
-morpion_game = Morpion(human=True)
-```
+2 modes available in the CLI : 
 
 ### Human versus Computer
 
-In the app.py file, change the human parameter to **False**.
+```
+python app.py
+```
 
-```python
-morpion_game = Morpion(human=False)
+### Human versus Human
+
+```
+python app.py -mode human
 ```

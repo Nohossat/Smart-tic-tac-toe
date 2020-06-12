@@ -10,7 +10,7 @@ class Morpion:
         print("Le jeu du morpion")
 
         # initialize attributs
-        self.board = ["*"] * 9 
+        self.board = list(range(1,10))
         self.available_squares = list(range(1,10))
         self.players = ["0", "X"]
         self.winning_combi = [
@@ -48,14 +48,13 @@ class Morpion:
         """
         print the current state of the board
         """
-        print('')
+        print('\n')
 
         for key, i in enumerate(self.board):
             if (key + 1) % 3 == 0:
                 print(i)
             else :
                 print(i, end =" ")
-        print('')
         print('-----------------')
 
     def get_human_choice(self):
@@ -91,7 +90,7 @@ class Morpion:
         """
         random choice among available squares by computer
         """
-        print(f"Joueur {self.current_player} (Computer) ")
+        print(f"Joueur {self.current_player} (Computer)")
         choice = random.choice(self.available_squares)
         self.print_choice(choice)
 
@@ -127,17 +126,15 @@ class Morpion:
         if self.board.count(self.current_player) >= 3:
             if self.check_winning_combinations() :
                 self.print_board()
-                print("=================")
-                print('')
-                print(f"{self.current_player} a gagné")
-                print('')
+                print("=================\n")
+                print(f"{self.current_player} a gagné\n")
                 print("End of the game")
             else :
-                if "*" not in self.board:
+
+                if not self.available_squares:
                     # game finished because all squares are filled
                     self.print_board()
-                    print("il n'y a pas de gagant")
-                    print('')
+                    print("il n'y a pas de gagant\n")
                     print("End of the game")
                 else :
                     # no winning combination, so continue
