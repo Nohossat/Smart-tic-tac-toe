@@ -37,6 +37,7 @@ class Morpion:
             [3, 4, 5],
             [6, 7, 8]
         ] # il y a 8 combinaisaons gagnates - on récupère leurs index
+
         self.current_player = self.players[random.randint(0,1)]
         self.mode = human
         
@@ -95,23 +96,20 @@ class Morpion:
         check if there is a winner, otherwise resume the game
         """
 
-        if self.board.count(self.current_player.token) >= 3:
-            if self.check_winning_combinations() :
+        if self.board.count(self.current_player.token) >= 3: # if less than 3 pawns on the board, no use to compute check if the player wins
+            if self.check_winning_combinations() : # the current player wins
                 self.print_board()
                 print("=================\n")
                 print(f"{self.current_player.token} a gagné\n")
                 print("End of the game")
+                return False
             else :
-                if not self.available_squares:
-                    # game finished because all squares are filled
+                if not self.available_squares: # game finished because all squares are filled
                     self.print_board()
                     print("il n'y a pas de gagant\n")
                     print("End of the game")
-                else :
-                    # no winning combination, so continue
-                    self.change_player()
-                    self.start_game()
-        else :
-            # there isn't enough square filled, so go on
-            self.change_player()
-            self.start_game()
+                    return False
+
+        # there isn't enough square filled / no winning combination, so go on
+        self.change_player()
+        self.start_game()
