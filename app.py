@@ -11,4 +11,5 @@ if __name__=='__main__':
     if args.mode in ["h", "human", "humain", "manuel"]:
         mode = True
 
-    Morpion(human=mode)
+    morpion_game = Morpion(human=mode)
+    morpion_game.start_game()

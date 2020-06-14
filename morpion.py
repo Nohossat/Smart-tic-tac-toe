@@ -5,7 +5,7 @@ import random
 class Morpion:
     def __init__(self, human=True):
         """
-        initialize attributes and start the game
+        initialize attributes
         """
 
         print("Le jeu du morpion")
@@ -40,18 +40,19 @@ class Morpion:
 
         self.current_player = self.players[random.randint(0,1)]
         self.mode = human
-        
-        # launch game
-        self.start_game()
+        self.gameon = True
 
     def start_game(self):
         """
         launch the game with the current state of the board and the current player
         """
 
-        self.print_board()
-        choice = self.current_player.choose_square(self.current_player.args)
-        self.print_choice(choice)
+        while self.gameon:
+            self.change_player()
+            self.print_board()
+            choice = self.current_player.choose_square(self.current_player.args)
+            self.print_choice(choice)
+            self.check_winner()
 
     def print_board(self):
         """
@@ -74,7 +75,6 @@ class Morpion:
 
         square = square - 1 # we have to remove 1 for indexation purposes
         self.board[square] = self.current_player.token # place pawn
-        self.check_winner()
 
     def check_winning_combinations(self):
         """
@@ -102,14 +102,10 @@ class Morpion:
                 print("=================\n")
                 print(f"{self.current_player.token} a gagné\n")
                 print("End of the game")
-                return False
+                self.gameon = False
             else :
                 if not self.available_squares: # game finished because all squares are filled
                     self.print_board()
                     print("il n'y a pas de gagant\n")
                     print("End of the game")
-                    return False
-
-        # there isn't enough square filled / no winning combination, so go on
-        self.change_player()
-        self.start_game()
+                    self.gameon = False
