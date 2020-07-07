@@ -1,4 +1,4 @@
-# Tic-Tac-Toe
+# Smart Tic-Tac-Toe
 
 A custom implementation of the famous game tic-tac-toe. 
 
@@ -10,7 +10,7 @@ A custom implementation of the famous game tic-tac-toe.
 python app.py
 ```
 
-The computer player has a limited intelligence : it can decide to block the opponent or to implement a winning strategy.
+The computer player has some intelligence : it can decide to block the opponent to preven him from winning or choose the best square to make a winning combination.
 
 ### Human versus Human
 
