@@ -2,7 +2,14 @@
 
 A custom implementation of the famous game tic-tac-toe. 
 
-2 modes available in the CLI : 
+## Installation
+
+```python
+git clone https://github.com/Nohossat/Smart-tic-tac-toe.git
+cd Smart-tic-tac-toe
+```
+
+2 modes available in the command line : 
 
 ### Human versus Computer
 
