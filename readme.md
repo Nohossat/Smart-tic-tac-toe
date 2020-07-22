@@ -1,6 +1,6 @@
 # Smart Tic-Tac-Toe
 
-![travis_build_status](https://travis-ci.com/Nohossat/Smart-tic-tac-toe.svg?branch=master)
+[![travis_build_status](https://travis-ci.com/Nohossat/Smart-tic-tac-toe.svg?branch=master)](https://travis-ci.com/github/Nohossat/Smart-tic-tac-toe)
 
 
 A custom implementation of the famous game tic-tac-toe. 
